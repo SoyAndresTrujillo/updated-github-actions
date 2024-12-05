@@ -1,0 +1,97 @@
+name: Learning Triggers 🤩
+run-name: ${{ github.actor }} is learning Triggers
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**.java'
+  issues:
+    types:
+      - labeled
+  workflow_dispatch:
+    inputs:
+      favorite_languaje:
+        description: 'Favorite Languaje'
+        default: Java
+        required: true
+        type: choice
+        options:
+        - Java
+        - Typescript  
+        - Go
+      username:
+        description: 'Your username'
+        required: true
+        default: Andrés
+        type: string
+  schedule:
+    - cron:  '15 22 * * *'
+
+jobs:
+  hello-world:
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 17
+
+    - name: Install Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: 8.11.1
+    
+    - name: Generate Gradle Wrapper
+      run: gradle wrapper --gradle-version 8.11.1
+    
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew build --warning-mode all
+
+    - name: Define username
+      run: echo "ACTOR=${{ github.actor }}" >> $GITHUB_ENV
+
+    - name: Run Main Function
+      run: ./gradlew run
+  say-languaje:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 17
+
+    - name: Install Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: 8.11.1
+    
+    - name: Generate Gradle Wrapper
+      run: gradle wrapper --gradle-version 8.11.1
+    
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew build --warning-mode all
+
+    - name: Define language
+      run: echo "LANGUAGE=${{ inputs.favorite_languaje }}" >> $GITHUB_ENV
+
+    - name: Run Main Function
+      run: ./gradlew run

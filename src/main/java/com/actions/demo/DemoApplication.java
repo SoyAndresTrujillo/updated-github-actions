@@ -16,6 +16,9 @@ public class DemoApplication {
     String ACTOR = dotenv.get("ACTOR");
     System.out.println(ACTOR + " is learning GitHub Actions");
 
+    String LANGUAGE = dotenv.get("LANGUAGE");
+    System.out.println(LANGUAGE + " is my favorite language");
+
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
