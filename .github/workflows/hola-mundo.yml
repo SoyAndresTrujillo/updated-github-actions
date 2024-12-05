@@ -1,0 +1,25 @@
+name: Learning GitHub Actions 🤩
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 17
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+
+    - name: Build with Gradle
+      run: ./gradlew build --warning-mode all
+
+    - name: Run Main Function
+      run: ./gradlew run
