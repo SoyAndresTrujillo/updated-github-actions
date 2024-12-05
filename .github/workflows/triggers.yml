@@ -91,7 +91,7 @@ jobs:
       run: ./gradlew build --warning-mode all
 
     - name: Define language
-      run: echo "LANGUAGE=${{ inputs.favorite_languaje }}" >> $GITHUB_ENV
+      run: echo "LANGUAGE=${{ github.LENGUAJE_FAVORITO }}" >> $GITHUB_ENV
 
     - name: Run Main Function
       run: ./gradlew run
