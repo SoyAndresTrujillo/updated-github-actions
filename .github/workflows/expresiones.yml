@@ -1,5 +1,5 @@
-name: Expresiones
-run-name: ${{ github.actor }} is learning Expresiones
+name: Expressions
+run-name: ${{ github.actor }} is learning Expressions
 
 on:
   push:
@@ -34,15 +34,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Pizza with ${github.event.inputs.sauce} sauce"
-
   tacos-job:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.favorite_food == 'Tacos'
     runs-on: ubuntu-latest
     steps:
       - run: echo "Tacos with ${github.event.inputs.sauce} sauce"
-
-  greet-user:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Hello user, welcome to the ${{ contains(fromJSON(github.event.inputs), 'sauce') ? github.event.inputs.sauce : '' }} party!"
