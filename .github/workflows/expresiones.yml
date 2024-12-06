@@ -1,0 +1,48 @@
+name: Expresiones
+run-name: ${{ github.actor }} is learning Expresiones
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - "**.java"
+  workflow_dispatch:
+    inputs:
+      favorite_food:
+        description: "Favorite food"
+        default: Pizza
+        required: true
+        type: choice
+        options:
+          - Pizza
+          - Tacos
+      sauce:
+        description: "Sauce"
+        required: true
+        default: Hot
+        type: choice
+        options:
+          - Hot
+          - Mild
+
+jobs:
+  pizza-job:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.favorite_food == 'Pizza'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Pizza with ${github.event.inputs.sauce} sauce"
+
+  tacos-job:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.favorite_food == 'Tacos'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Tacos with ${github.event.inputs.sauce} sauce"
+
+  greet-user:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello user, welcome to the ${{ contains(fromJSON(github.event.inputs), 'sauce') ? github.event.inputs.sauce : '' }} party!"
