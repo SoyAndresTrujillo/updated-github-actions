@@ -30,12 +30,13 @@ on:
 
 jobs:
   pizza-job:
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.favorite_food == 'Pizza'
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.favorite_food == 'Pizza' }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Pizza with ${github.event.inputs.sauce} sauce"
+      - run: echo "Pizza with ${{ github.event.inputs.sauce }} sauce"
+
   tacos-job:
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.favorite_food == 'Tacos'
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.favorite_food == 'Tacos' }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Tacos with ${github.event.inputs.sauce} sauce"
+      - run: echo "Tacos with ${{ github.event.inputs.sauce }} sauce"
