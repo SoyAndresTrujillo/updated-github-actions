@@ -1,0 +1,12 @@
+name: Using variables
+on: push
+env:
+  environment_var: development
+  token: ${{ secrets.TOKEN_TEST }}
+
+jobs:
+  deploy_to_environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to environment
+        run: echo "Deploying to ${{ env.environment_var }} environment with token ${{ env.token }}"
